@@ -1,26 +1,30 @@
-require "set"
 require_relative "player"
 
 class Game
-    attr_reader :players, :losses, :dictionary
+    attr_reader :players, :losses, :dictionary, :letters_count, :words
 
     def initialize
-        words = File.readlines("dictionary.txt").map(&:chomp)
-        @dictionary = Set.new(words)
+        @words = File.readlines("dictionary.txt").map(&:chomp)
         number = number_of_players_prompt
         players = names_of_players_prompt(number)
         @players = players
         @losses = set_loss_count(players)
-        letters_count = choose_number_of_letters
+        @letters_count = choose_number_of_letters
         assign_player_guesses(letters_count)
+        @secret_word = ""
 
     end
 
     def run
         welcome_message
-        assign_secret_word
+        assign_secret_word(letters_count)
 
 
+    end
+
+    def assign_secret_word(count)
+        eligible_words = words.select {|word| word.length == count}
+        @secret_word = eligible_words.sample
     end
 
     def assign_player_guesses(count)
