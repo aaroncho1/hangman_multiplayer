@@ -18,8 +18,16 @@ class Game
     def run
         welcome_message
         assign_secret_word(letters_count)
+        until game_over?
 
+    end
 
+    def game_over?
+        remaining_players == 1 || word_revealed?
+    end
+
+    def remaining_players
+        losses.count {|k,v| v < letters_count}
     end
 
     def assign_secret_word(count)
