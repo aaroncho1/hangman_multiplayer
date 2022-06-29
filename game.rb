@@ -4,14 +4,15 @@ class Game
     def initialize
         words = File.readlines("dictionary.txt").map(&:chomp)
         number = number_of_players_prompt
-        names_of_players_prompt(number)
+        players = names_of_players_prompt(number)
+        @players = players
     end
 
     def number_of_players_prompt
-        puts "Select the number of players:"
         begin
+            puts "Select the number of players:"
             players_selected = gets.chomp.to_i
-            raise "Number of players must be greater than 1" if players_selected <= 1
+            raise "Number of players must be greater than 1. Try again" if players_selected <= 1
         rescue => e   
             puts e.message
             retry
