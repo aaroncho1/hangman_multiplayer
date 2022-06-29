@@ -11,13 +11,32 @@ class Game
         players = names_of_players_prompt(number)
         @players = players
         @losses = set_loss_count(players)
+        letters_count = choose_number_of_letters
+        assign_player_guesses(letters_count)
+
     end
 
     def run
         welcome_message
-        
+        assign_secret_word
+
 
     end
+
+    def assign_player_guesses(count)
+        players.each do |player|
+            player.remaining_guesses = count
+        end
+    end
+
+
+    def choose_number_of_letters
+        system("clear")
+        puts "Choose the number of letters for the secret word:"
+        number_of_letters = gets.chomp.to_i
+        number_of_letters
+    end
+
 
     def welcome_message
         system("clear")
@@ -56,4 +75,4 @@ class Game
 
 end
 
-Game.new
+Game.new.run
