@@ -1,10 +1,12 @@
-require_relative 'player'
+require "set"
+require_relative "player"
 
 class Game
-    attr_reader :players
+    attr_reader :players, :losses
 
     def initialize
         words = File.readlines("dictionary.txt").map(&:chomp)
+        @dictionary = Set.new(words)
         number = number_of_players_prompt
         players = names_of_players_prompt(number)
         @players = players
