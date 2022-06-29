@@ -2,7 +2,7 @@ require "set"
 require_relative "player"
 
 class Game
-    attr_reader :players, :losses
+    attr_reader :players, :losses, :dictionary
 
     def initialize
         words = File.readlines("dictionary.txt").map(&:chomp)
@@ -11,7 +11,6 @@ class Game
         players = names_of_players_prompt(number)
         @players = players
         @losses = set_loss_count(players)
-        @losses
     end
 
     def set_loss_count(players)
