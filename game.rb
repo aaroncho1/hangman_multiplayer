@@ -2,6 +2,7 @@ require_relative "player"
 
 class Game
     attr_reader :players, :losses, :dictionary, :letters_count, :words
+    attr_accessor :word_revealed
 
     def initialize
         @words = File.readlines("dictionary.txt").map(&:chomp)
@@ -12,6 +13,7 @@ class Game
         @letters_count = choose_number_of_letters
         assign_player_guesses(letters_count)
         @secret_word = ""
+        @word_revealed = false
 
     end
 
@@ -20,6 +22,10 @@ class Game
         assign_secret_word(letters_count)
         until game_over?
 
+    end
+
+    def word_revealed?
+        word_revealed
     end
 
     def game_over?
