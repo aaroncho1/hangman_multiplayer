@@ -1,11 +1,23 @@
 require_relative 'player'
 
 class Game
+    attr_reader :players
+
     def initialize
         words = File.readlines("dictionary.txt").map(&:chomp)
         number = number_of_players_prompt
         players = names_of_players_prompt(number)
         @players = players
+        @losses = set_loss_count(players)
+        @losses
+    end
+
+    def set_loss_count(players)
+        losses = Hash.new
+        players.each do |player|
+            losses[player] = 0
+        end
+        losses
     end
 
     def number_of_players_prompt
