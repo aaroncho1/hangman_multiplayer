@@ -13,6 +13,17 @@ class Game
         @losses = set_loss_count(players)
     end
 
+    def run
+        welcome_message
+        
+
+    end
+
+    def welcome_message
+        system("clear")
+        puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word. Good luck!"
+    end
+
     def set_loss_count(players)
         losses = Hash.new
         players.each do |player|
