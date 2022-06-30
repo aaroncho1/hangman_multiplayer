@@ -30,7 +30,17 @@ class Game
             take_turn
             switch_players
         end
+        winner = choose_winner
+        winner_message(winner)
+    end
 
+    def choose_winner
+        winner = players.select {|player| player.remaining_guesses > 0}
+        winner
+    end
+
+    def winner_message(winner)
+        puts "#{winner.name} wins!"
     end
 
     def switch_players
