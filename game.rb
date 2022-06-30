@@ -46,6 +46,12 @@ class Game
             word_fragment[ind] = letter
         end
     end 
+
+    def update_incorrect_letter_guess(letter)
+        puts "#{letter} is not in the word"
+        current_player.remaining_guesses -= 1
+    end
+
         
     def check_letter(letter)
         if @secret_word.include?(letter)
@@ -53,7 +59,7 @@ class Game
             update_word_fragment(letter)
             check_word_revealed?
         else
-            puts "#{letter} is not in the word"
+            update_incorrect_letter_guess(letter)
 
 
 
