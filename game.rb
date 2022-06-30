@@ -1,8 +1,9 @@
 require_relative "player"
+require 'byebug'
 
 class Game
     attr_reader :players, :dictionary, :letters_count, :words
-    attr_accessor :word_revealed, :current_player, :word_fragment
+    attr_accessor :word_revealed, :current_player, :word_fragment, :word_guessed
 
     def initialize
         @words = File.readlines("dictionary.txt").map(&:chomp)
@@ -13,17 +14,28 @@ class Game
         assign_player_guesses(letters_count)
         @secret_word = ""
         @word_revealed = false
-        @current_player = players.first
+        @current_player = nil
         @word_fragment = "_" * letters_count
+        @word_guessed = false
+    end
+
+    def assign_current_player
+        @current_player = players.first
+    end
+
+    def word_guessed?
+        word_guessed
     end
 
     def take_turn
+        assign_current_player
         guess_word?
-        letter = guess_letter unless guess_word?
+        letter = guess_letter unless word_guessed?
         check_letter(letter)
     end
 
     def run
+        debugger
         welcome_message
         assign_secret_word(letters_count)
         until game_over?
@@ -45,11 +57,13 @@ class Game
 
     def switch_players
         players.rotate!
-        current_player = players.first
+        assign_current_player
+        word_guessed = false
     end
 
     def check_word_revealed?
         word_revealed = true if !word_fragment.include?("_")
+        false
     end
 
     def update_word_fragment(letter)
@@ -72,6 +86,7 @@ class Game
     def check_letter(letter)
         if @secret_word.include?(letter)
             puts "#{letter} is in the word!"
+            sleep 1.25
             update_word_fragment(letter)
             check_word_revealed?
         else
@@ -95,14 +110,15 @@ class Game
             sleep 1.5
             retry
         end
-        return false if choice == "n"
+        word_guessed = false if choice == "n"
+        puts "#{current_player.name}, enter the word you are guessing:"
         guessed_word = gets.chomp.downcase
         if guessed_word == @secret_word
             update_correct_word_guess
         else
             update_incorrect_word_guess
         end
-        guessed_word
+        word_guessed = true
     end
 
     def update_correct_word_guess
