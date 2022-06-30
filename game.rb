@@ -22,14 +22,20 @@ class Game
         welcome_message
         assign_secret_word(letters_count)
         until game_over?
-            take_turn
+            guess_word?
+            letter = take_turn
+
+
 
         end
 
     end
 
     def take_turn
-
+        puts "#{current_player.name}, choose a letter:"
+        letter = gets.chomp
+        letter
+    end
 
     def word_revealed?
         word_revealed
