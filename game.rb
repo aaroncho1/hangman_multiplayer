@@ -28,16 +28,18 @@ class Game
     end
 
     def take_turn
-        assign_current_player
         guess_word?
-        letter = guess_letter unless word_guessed?
-        check_letter(letter)
+        unless word_guessed?
+            letter = guess_letter 
+            check_letter(letter)
+        end
     end
 
     def run
         debugger
         welcome_message
         assign_secret_word(letters_count)
+        assign_current_player
         until game_over?
             take_turn
             switch_players
@@ -59,11 +61,11 @@ class Game
     def switch_players
         players.rotate!
         assign_current_player
-        word_guessed = false
+        @word_guessed = false
     end
 
     def check_word_revealed?
-        word_revealed = true if !word_fragment.include?("_")
+        @word_revealed = true if !word_fragment.include?("_")
         false
     end
 
@@ -112,21 +114,24 @@ class Game
             sleep 1.5
             retry
         end
-        word_guessed = false if choice == "n"
-        puts "#{current_player.name}, enter the word you are guessing:"
-        guessed_word = gets.chomp.downcase
-        if guessed_word == @secret_word
-            update_correct_word_guess
+        if choice == "n"
+            @word_guessed = false
         else
-            update_incorrect_word_guess
+            puts "#{current_player.name}, enter the word you are guessing:"
+            guessed_word = gets.chomp.downcase
+            if guessed_word == @secret_word
+                update_correct_word_guess
+            else
+                update_incorrect_word_guess
+            end
+            @word_guessed = true
         end
-        word_guessed = true
     end
 
     def update_correct_word_guess
         puts "Word guessed correctly!"
         sleep 1.5
-        word_revealed = true
+        @word_revealed = true
     end
 
     def update_incorrect_word_guess
