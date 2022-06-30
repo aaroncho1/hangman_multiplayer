@@ -2,7 +2,7 @@ require_relative "player"
 
 class Game
     attr_reader :players, :dictionary, :letters_count, :words
-    attr_accessor :word_revealed, :current_player
+    attr_accessor :word_revealed, :current_player, :word_fragment
 
     def initialize
         @words = File.readlines("dictionary.txt").map(&:chomp)
@@ -14,7 +14,7 @@ class Game
         @secret_word = ""
         @word_revealed = false
         @current_player = players.first
-
+        @word_fragment = "_" * letters_count
     end
 
     def run
@@ -23,12 +23,18 @@ class Game
         until game_over?
             guess_word?
             letter = take_turn unless guess_word?
+            check_letter(letter)
 
 
 
         end
 
     end
+
+    def check_letter(letter)
+        if @secret_word.include?(letter)
+
+
 
     def guess_word_player_prompt
         system("clear")
@@ -47,7 +53,7 @@ class Game
             retry
         end
         return false if choice == "n"
-        guessed_word = gets.chomp
+        guessed_word = gets.chomp.downcase
         if guessed_word == @secret_word
             update_correct_guess
         else
@@ -67,8 +73,9 @@ class Game
     end
 
     def take_turn
+        system("clear")
         puts "#{current_player.name}, choose a letter:"
-        letter = gets.chomp
+        letter = gets.chomp.downcase
         letter
     end
 
