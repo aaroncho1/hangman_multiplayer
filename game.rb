@@ -63,7 +63,7 @@ class Game
 
     def update_incorrect_guess
         puts "Word guessed incorrectly"
-        current_player.incorrect_guesses += 1
+        current_player.remaining_guesses -= 1
     end
 
     def take_turn
@@ -81,12 +81,12 @@ class Game
     end
 
     def remaining_players
-        losses.count {|k,v| v < letters_count}
+        players.count {|player| player.remaining_guesses > 0}
     end
 
     def assign_secret_word(count)
         eligible_words = words.select {|word| word.length == count}
-        @secret_word = eligible_words.sample
+        @secret_word = eligible_words.sample.downcase
     end
 
     def assign_player_guesses(count)
