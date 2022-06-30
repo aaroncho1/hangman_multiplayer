@@ -53,6 +53,7 @@ class Game
 
     def winner_message(winner)
         puts "#{winner.name} wins!"
+        sleep 1.5
     end
 
     def switch_players
@@ -80,13 +81,14 @@ class Game
 
     def update_incorrect_letter_guess(letter)
         puts "#{letter} is not in the word"
+        sleep 1.5
         current_player.remaining_guesses -= 1
     end
         
     def check_letter(letter)
         if @secret_word.include?(letter)
             puts "#{letter} is in the word!"
-            sleep 1.25
+            sleep 1.5
             update_word_fragment(letter)
             check_word_revealed?
         else
@@ -123,11 +125,13 @@ class Game
 
     def update_correct_word_guess
         puts "Word guessed correctly!"
+        sleep 1.5
         word_revealed = true
     end
 
     def update_incorrect_word_guess
         puts "Word guessed incorrectly"
+        sleep 1.5
         current_player.remaining_guesses -= 1
     end
 
