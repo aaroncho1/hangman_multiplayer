@@ -33,6 +33,12 @@ class Game
 
     end
 
+    def switch_players
+        players.rotate!
+        current_player = players.first
+    end
+
+
     def check_word_revealed?
         word_revealed = true if !word_fragment.include?("_")
     end
