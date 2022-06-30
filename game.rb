@@ -17,16 +17,18 @@ class Game
         @word_fragment = "_" * letters_count
     end
 
+    def take_turn
+        guess_word?
+        letter = guess_letter unless guess_word?
+        check_letter(letter)
+    end
+
     def run
         welcome_message
         assign_secret_word(letters_count)
         until game_over?
-            guess_word?
-            letter = take_turn unless guess_word?
-            check_letter(letter)
-
-
-
+            take_turn
+            switch_players
         end
 
     end
@@ -60,9 +62,8 @@ class Game
             check_word_revealed?
         else
             update_incorrect_letter_guess(letter)
-
-
-
+        end
+    end
 
     def guess_word_player_prompt
         system("clear")
@@ -100,7 +101,7 @@ class Game
         current_player.remaining_guesses -= 1
     end
 
-    def take_turn
+    def guess_letter
         system("clear")
         puts "#{current_player.name}, choose a letter:"
         letter = gets.chomp.downcase
