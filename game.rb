@@ -49,13 +49,21 @@ class Game
         return false if choice == "n"
         guessed_word = gets.chomp
         if guessed_word == @secret_word
-            puts "Word guessed correctly!"
-            word_revealed = true
+            update_correct_guess
         else
-            puts "Word guessed incorrectly"
-            current_player.incorrect_guesses += 1
+            update_incorrect_guess
         end
         guessed_word
+    end
+
+    def update_correct_guess
+        puts "Word guessed correctly!"
+        word_revealed = true
+    end
+
+    def update_incorrect_guess
+        puts "Word guessed incorrectly"
+        current_player.incorrect_guesses += 1
     end
 
     def take_turn
