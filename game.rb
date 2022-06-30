@@ -31,8 +31,22 @@ class Game
 
     end
 
+    def update_word_fragment(letter)
+        indices = []
+        @secret_word.each_char.with_index do |char, i|
+            if char == letter
+                indices << i 
+            end
+        end
+        indices.each do |ind|
+            word_fragment[ind] = letter
+        end
+    end 
+        
     def check_letter(letter)
         if @secret_word.include?(letter)
+            puts "#{letter} is in the word!"
+            update_word_fragment(letter)
 
 
 
