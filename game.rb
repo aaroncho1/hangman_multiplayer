@@ -31,6 +31,10 @@ class Game
 
     end
 
+    def check_word_revealed?
+        word_revealed = true if !word_fragment.include?("_")
+    end
+
     def update_word_fragment(letter)
         indices = []
         @secret_word.each_char.with_index do |char, i|
@@ -47,6 +51,10 @@ class Game
         if @secret_word.include?(letter)
             puts "#{letter} is in the word!"
             update_word_fragment(letter)
+            check_word_revealed?
+        else
+            puts "#{letter} is not in the word"
+
 
 
 
@@ -69,19 +77,19 @@ class Game
         return false if choice == "n"
         guessed_word = gets.chomp.downcase
         if guessed_word == @secret_word
-            update_correct_guess
+            update_correct_word_guess
         else
-            update_incorrect_guess
+            update_incorrect_word_guess
         end
         guessed_word
     end
 
-    def update_correct_guess
+    def update_correct_word_guess
         puts "Word guessed correctly!"
         word_revealed = true
     end
 
-    def update_incorrect_guess
+    def update_incorrect_word_guess
         puts "Word guessed incorrectly"
         current_player.remaining_guesses -= 1
     end
