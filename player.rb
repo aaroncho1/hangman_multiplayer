@@ -5,6 +5,7 @@ class Player
     def initialize(name)
         @name = name
         @remaining_guesses = nil
+        @incorrect_guesses = 0
     end
 
 end

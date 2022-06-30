@@ -1,7 +1,7 @@
 require_relative "player"
 
 class Game
-    attr_reader :players, :losses, :dictionary, :letters_count, :words
+    attr_reader :players, :dictionary, :letters_count, :words
     attr_accessor :word_revealed, :current_player
 
     def initialize
@@ -9,7 +9,6 @@ class Game
         number = number_of_players_prompt
         players = names_of_players_prompt(number)
         @players = players
-        @losses = set_loss_count(players)
         @letters_count = choose_number_of_letters
         assign_player_guesses(letters_count)
         @secret_word = ""
@@ -23,7 +22,7 @@ class Game
         assign_secret_word(letters_count)
         until game_over?
             guess_word?
-            letter = take_turn
+            letter = take_turn unless guess_word?
 
 
 
@@ -31,21 +30,30 @@ class Game
 
     end
 
+    def guess_word_player_prompt
+        system("clear")
+        puts "#{current_player.name}, guess word? (y/n):"
+        answer = gets.chomp.downcase
+        answer
+    end
+
     def guess_word?
         begin
-            system("clear")
-            puts "#{current_player.name}, guess word? (y/n):"
-            answer = gets.chomp
-            raise "invalid answer, try again" if ["y","n"].include?(answer)
+            choice = guess_word_player_prompt
+            raise "invalid answer, try again" if ["y","n"].include?(choice)
         rescue => e  
             puts e.message
             sleep 1.5
             retry
         end
+        return false if choice == "n"
         guessed_word = gets.chomp
         if guessed_word == @secret_word
             puts "Word guessed correctly!"
             word_revealed = true
+        else
+            puts "Word guessed incorrectly"
+            current_player.incorrect_guesses += 1
         end
         guessed_word
     end
@@ -91,14 +99,6 @@ class Game
     def welcome_message
         system("clear")
         puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word. Good luck!"
-    end
-
-    def set_loss_count(players)
-        losses = Hash.new
-        players.each do |player|
-            losses[player] = 0
-        end
-        losses
     end
 
     def number_of_players_prompt
