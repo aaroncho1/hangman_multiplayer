@@ -31,6 +31,25 @@ class Game
 
     end
 
+    def guess_word?
+        begin
+            system("clear")
+            puts "#{current_player.name}, guess word? (y/n):"
+            answer = gets.chomp
+            raise "invalid answer, try again" if ["y","n"].include?(answer)
+        rescue => e  
+            puts e.message
+            sleep 1.5
+            retry
+        end
+        guessed_word = gets.chomp
+        if guessed_word == @secret_word
+            puts "Word guessed correctly!"
+            word_revealed = true
+        end
+        guessed_word
+    end
+
     def take_turn
         puts "#{current_player.name}, choose a letter:"
         letter = gets.chomp
