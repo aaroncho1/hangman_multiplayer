@@ -48,7 +48,6 @@ class Game
         current_player = players.first
     end
 
-
     def check_word_revealed?
         word_revealed = true if !word_fragment.include?("_")
     end
@@ -69,7 +68,6 @@ class Game
         puts "#{letter} is not in the word"
         current_player.remaining_guesses -= 1
     end
-
         
     def check_letter(letter)
         if @secret_word.include?(letter)
@@ -147,14 +145,12 @@ class Game
         end
     end
 
-
     def choose_number_of_letters
         system("clear")
         puts "Choose the number of letters for the secret word:"
         number_of_letters = gets.chomp.to_i
         number_of_letters
     end
-
 
     def welcome_message
         system("clear")
@@ -182,7 +178,6 @@ class Game
         end
         players
     end
-
 end
 
 Game.new.run
