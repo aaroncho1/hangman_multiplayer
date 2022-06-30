@@ -89,7 +89,7 @@ class Game
     def guess_word?
         begin
             choice = guess_word_player_prompt
-            raise "invalid answer, try again" if ["y","n"].include?(choice)
+            raise "invalid answer, try again" if !["y","n"].include?(choice)
         rescue => e  
             puts e.message
             sleep 1.5
@@ -155,6 +155,7 @@ class Game
     def welcome_message
         system("clear")
         puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word. Good luck!"
+        sleep 3
     end
 
     def number_of_players_prompt
