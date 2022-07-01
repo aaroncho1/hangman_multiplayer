@@ -1,5 +1,5 @@
 require_relative "player"
-# require 'byebug'
+require 'byebug'
 
 class Game
     GUESSED_WORDS = []
@@ -38,7 +38,7 @@ class Game
     end
 
     def run
-        # debugger
+        debugger
         welcome_message
         assign_secret_word(letters_count)
         assign_current_player
@@ -55,7 +55,7 @@ class Game
         if word_revealed?
             winner = current_player
         elsif remaining_players == 1
-            winner = players.select {|player| player.remaining_guesses > 0}
+            winner = (players.select {|player| player.remaining_guesses > 0}).shift
         else
             winner = nil
         end
