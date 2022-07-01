@@ -166,7 +166,7 @@ class Game
 
     def assign_player_guesses(count)
         players.each do |player|
-            player.remaining_guesses = count
+            player.remaining_guesses = count <= 5 ?  count : 6
         end
     end
 
