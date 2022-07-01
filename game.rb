@@ -100,12 +100,14 @@ class Game
 
     def guess_word_player_prompt
         system("clear")
+        display
         puts "#{current_player.name}, guess word? (y/n):"
         answer = gets.chomp.downcase
         answer
     end
 
     def guess_word?
+        display
         begin
             choice = guess_word_player_prompt
             raise "invalid answer, try again" if !["y","n"].include?(choice)
@@ -142,6 +144,7 @@ class Game
 
     def guess_letter
         system("clear")
+        display
         puts "#{current_player.name}, choose a letter:"
         letter = gets.chomp.downcase
         letter
@@ -223,10 +226,11 @@ class Game
     end
 
     def render_player_guesses
+        puts "Player remaining guesses"
         players.each do |player|
-            puts "Player remaining guesses"
             puts "#{player.name}: #{player.remaining_guesses}"
         end
+        puts ""
     end
 end
 
