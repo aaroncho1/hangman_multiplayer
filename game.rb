@@ -106,6 +106,7 @@ class Game
             sleep 1.5
             update_word_fragment(letter)
             check_word_revealed?
+            guess_word?
         else
             update_incorrect_letter_guess(letter)
         end
