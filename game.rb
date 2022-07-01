@@ -211,6 +211,19 @@ class Game
         end
         players
     end
+
+    def render_word_fragment
+        puts "Guess the word: #{word_fragment}"
+        puts ""
+    end
+
+    def render_player_guesses
+        puts ""
+        players.each do |player|
+            puts "Player remaining guesses"
+            puts "#{player.name}: #{player.remaining_guesses}"
+        end
+    end
 end
 
 Game.new.run
