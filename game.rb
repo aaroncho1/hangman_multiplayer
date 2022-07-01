@@ -1,5 +1,4 @@
 require_relative "player"
-# require 'byebug'
 
 class Game
     GUESSED_WORDS = []
@@ -38,7 +37,6 @@ class Game
     end
 
     def run
-        # debugger
         welcome_message
         assign_secret_word(letters_count)
         assign_current_player
@@ -73,6 +71,10 @@ class Game
     def switch_players
         players.rotate!
         assign_current_player
+        system("clear")
+        puts "#{current_player.name}'s turn"
+        sleep 1.5
+        system("clear")
         @word_guessed = false
     end
 
