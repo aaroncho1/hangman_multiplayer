@@ -1,4 +1,5 @@
 require_relative "player"
+require 'byebug'
 
 class Game
     GUESSED_WORDS = []
@@ -37,6 +38,7 @@ class Game
     end
 
     def run
+        debugger
         welcome_message
         assign_secret_word(letters_count)
         assign_current_player
@@ -205,8 +207,14 @@ class Game
 
     def choose_number_of_letters
         system("clear")
-        puts "Choose the number of letters for the secret word:"
-        number_of_letters = gets.chomp.to_i
+        begin
+            puts "Choose the number of letters for the secret word:"
+            number_of_letters = gets.chomp.to_i
+            raise "Number of letters must be greater than 2" if number_of_letters <= 2
+        rescue => e    
+            puts e.message
+            retry
+        end
         number_of_letters
     end
 
