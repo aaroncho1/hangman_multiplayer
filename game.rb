@@ -97,6 +97,7 @@ class Game
         puts "#{letter} is not in the word"
         sleep 1.5
         current_player.remaining_guesses -= 1
+        GUESSED_LETTERS << letter
     end
         
     def check_letter(letter)
