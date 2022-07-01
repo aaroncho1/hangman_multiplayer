@@ -132,8 +132,15 @@ class Game
         if choice == "n"
             @word_guessed = false
         else
-            puts "#{current_player.name}, enter the word you are guessing:"
-            guessed_word = gets.chomp.downcase
+            begin
+                puts "#{current_player.name}, enter the word you are guessing:"
+                guessed_word = gets.chomp.downcase
+                raise "Word has been guessed already. Try again" if GUESSED_WORDS.include?(guessed_word)
+            rescue => e    
+                puts e.message
+                retry
+            end
+
             if guessed_word == @secret_word
                 update_correct_word_guess
             else
@@ -159,8 +166,14 @@ class Game
     def guess_letter
         system("clear")
         display
-        puts "#{current_player.name}, choose a letter:"
-        letter = gets.chomp.downcase
+        begin
+            puts "#{current_player.name}, choose a letter:"
+            letter = gets.chomp.downcase
+            raise "Letter has been guessed already. Try again" if GUESSED_LETTERS.include?(letter)
+        rescue => e    
+            puts e.message
+            retry
+        end
         letter
     end
 
