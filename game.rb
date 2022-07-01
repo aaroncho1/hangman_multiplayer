@@ -1,5 +1,5 @@
 require_relative "player"
-require 'byebug'
+# require 'byebug'
 
 class Game
     GUESSED_WORDS = []
@@ -38,13 +38,13 @@ class Game
     end
 
     def run
-        debugger
+        # debugger
         welcome_message
         assign_secret_word(letters_count)
         assign_current_player
         until game_over?
             take_turn
-            switch_players
+            switch_players unless game_over?
         end
         winner = choose_winner
         winner_message(winner)
