@@ -49,12 +49,21 @@ class Game
     end
 
     def choose_winner
-        winner = players.select {|player| player.remaining_guesses > 0}
-        winner
+        if word_revealed?
+            winner = current_player
+        elsif remaining_players == 1
+            winner = players.select {|player| player.remaining_guesses > 0}
+        else
+            winner = nil
+        end
     end
 
     def winner_message(winner)
-        puts "#{winner.name} wins!"
+        if winner == nil
+            puts "Nobody wins"
+        else
+            puts "#{winner.name} wins!"
+        end
         sleep 1.5
     end
 
