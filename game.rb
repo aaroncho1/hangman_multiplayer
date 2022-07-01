@@ -251,13 +251,13 @@ class Game
 
     def render_guessed_letters
         letters_string = GUESSED_LETTERS.join(", ")
-        puts "#{letters_string}"
+        puts "Guessed letters: #{letters_string}"
         puts ""
     end
 
     def render_guessed_words
         words_string = GUESSED_WORDS.join(", ")
-        puts "#{words_string}"
+        puts "Guessed words: #{words_string}"
         puts ""
     end
 
