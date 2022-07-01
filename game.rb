@@ -2,6 +2,8 @@ require_relative "player"
 # require 'byebug'
 
 class Game
+    GUESSED_WORDS = []
+    GUESSED_LETTERS = []
     attr_reader :players, :dictionary, :letters_count, :words
     attr_accessor :word_revealed, :current_player, :word_fragment, :word_guessed
 
@@ -46,6 +48,7 @@ class Game
         end
         winner = choose_winner
         winner_message(winner)
+        reveal_word
     end
 
     def choose_winner
@@ -240,6 +243,12 @@ class Game
             puts "#{player.name}: #{player.remaining_guesses}"
         end
         puts ""
+    end
+
+    private
+    def reveal_word
+        puts ""
+        puts "The secret word is #{@secret_word}!"
     end
 end
 
