@@ -136,7 +136,7 @@ class Game
             if guessed_word == @secret_word
                 update_correct_word_guess
             else
-                update_incorrect_word_guess
+                update_incorrect_word_guess(guessed_word)
             end
             @word_guessed = true
         end
@@ -148,10 +148,11 @@ class Game
         @word_revealed = true
     end
 
-    def update_incorrect_word_guess
+    def update_incorrect_word_guess(word)
         puts "Word guessed incorrectly"
         sleep 1.5
         current_player.remaining_guesses -= 1
+        GUESSED_WORDS << word
     end
 
     def guess_letter
