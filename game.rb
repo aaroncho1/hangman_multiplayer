@@ -245,6 +245,20 @@ class Game
     def display
         render_word_fragment
         render_player_guesses
+        render_guessed_letters
+        render_guessed_words
+    end
+
+    def render_guessed_letters
+        letters_string = GUESSED_LETTERS.join(", ")
+        puts "#{letters_string}"
+        puts ""
+    end
+
+    def render_guessed_words
+        words_string = GUESSED_WORDS.join(", ")
+        puts "#{words_string}"
+        puts ""
     end
 
     def render_word_fragment
