@@ -1,5 +1,5 @@
 require_relative "player"
-require 'byebug'
+# require 'byebug'
 
 class Game
     attr_reader :players, :dictionary, :letters_count, :words
@@ -36,7 +36,7 @@ class Game
     end
 
     def run
-        debugger
+        # debugger
         welcome_message
         assign_secret_word(letters_count)
         assign_current_player
@@ -179,8 +179,15 @@ class Game
 
     def welcome_message
         system("clear")
-        puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word. Good luck!"
-        sleep 3
+        puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word if the number of letters is less than 6. Each player gets 6 guesses for words with 6 or more letters. Good luck!"
+        puts ""
+        puts "Press any key to continue:"
+        press_key_to_continue
+    end
+
+    def press_key_to_continue
+        key = gets.chomp
+        system("clear")
     end
 
     def number_of_players_prompt
