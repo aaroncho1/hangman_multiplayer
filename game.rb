@@ -69,7 +69,9 @@ class Game
     end
 
     def switch_players
-        players.rotate!
+        until players[0].remaining_guesses > 0 && players[0] != current_player
+            players.rotate!
+        end
         assign_current_player
         system("clear")
         puts "#{current_player.name}'s turn"
