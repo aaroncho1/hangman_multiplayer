@@ -8,6 +8,7 @@ class Game
 
     def initialize
         @words = File.readlines("dictionary.txt").map(&:chomp)
+        welcome_message
         number = number_of_players_prompt
         players = names_of_players_prompt(number)
         @players = players
@@ -37,9 +38,9 @@ class Game
     end
 
     def run
-        welcome_message
         assign_secret_word(letters_count)
         assign_current_player
+        display_turn
         until game_over?
             take_turn
             switch_players unless game_over?
@@ -73,11 +74,15 @@ class Game
             players.rotate!
         end
         assign_current_player
+        display_turn
+        @word_guessed = false
+    end
+
+    def display_turn
         system("clear")
         puts "#{current_player.name}'s turn"
         sleep 1.5
         system("clear")
-        @word_guessed = false
     end
 
     def check_word_revealed?
@@ -218,6 +223,7 @@ class Game
             puts "Choose the number of letters for the secret word:"
             number_of_letters = gets.chomp.to_i
             raise "Number of letters must be greater than 2" if number_of_letters <= 2
+            raise "Number of letters cannot be greater than 20" if number_of_letters > 20
         rescue => e    
             puts e.message
             retry
@@ -227,7 +233,7 @@ class Game
 
     def welcome_message
         system("clear")
-        puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word if the number of letters is less than 6. Each player gets 6 guesses for words with 6 or more letters. Good luck!"
+        puts "Welcome to Hangman! The rules are simple, the number of guesses each player gets is equal to the number of letters of the secret word if the number of letters is less than 6. Each player gets 6 guesses for words with 6 or more letters. The word length must be at least 3 and not greater than 20. Good luck!"
         puts ""
         puts "Press any key to continue:"
         press_key_to_continue
