@@ -192,6 +192,7 @@ class Game
         raise "Letter has been guessed already. Try again" if GUESSED_LETTERS.include?(letter)
         raise "Letter must be one character. Try again" if letter.length != 1
         raise "Letter must be a valid letter. Try again" if !alpha.include?(letter)
+        raise "Letter is already in the word. Try again" if word_fragment.include?(letter)
     end
 
     def word_revealed?
