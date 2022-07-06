@@ -174,12 +174,19 @@ class Game
         begin
             puts "#{current_player.name}, choose a letter:"
             letter = gets.chomp.downcase
-            raise "Letter has been guessed already. Try again" if GUESSED_LETTERS.include?(letter)
+            letter_rules(letter)
         rescue => e    
             puts e.message
             retry
         end
         letter
+    end
+
+    def letter_rules(letter)
+        alpha = ("a".."z").to_a
+        raise "Letter has been guessed already. Try again" if GUESSED_LETTERS.include?(letter)
+        raise "Letter must be one character. Try again" if letter.length != 1
+        raise "Letter must be a valid letter. Try again" if !alpha.include?(letter)
     end
 
     def word_revealed?
